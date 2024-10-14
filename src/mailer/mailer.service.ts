@@ -34,7 +34,7 @@ export class MailerService {
             html: `
                 <a href="${url}">Reset password</a>
                 <p>Secret code <strong>${code}</strong></p>
-                <p>This code will expire in 5 minutes</p>
+                <p>This code will expire in 15 minutes</p>
             `
         });
     }

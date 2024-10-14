@@ -17,8 +17,8 @@ export class AuthService {
         private readonly mailerService: MailerService,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService) {}
-        async signup(signupDto: SignupDto) {
-            const { username, email, password } = signupDto;
+    async signup(signupDto: SignupDto) {
+        const { username, email, password } = signupDto;
         const user = await this.prismaService.user.findUnique({where : {email}});
         if (user) throw new ConflictException('User already exists');
         const hash = await bcrypt.hash(password, 10);
@@ -45,8 +45,8 @@ export class AuthService {
         if (!user) throw new NotFoundException('User not found');
         const code = speakeasy.totp({
             secret: this.configService.get('OTP_CODE'),
-            digits: 5,
-            step: 60 * 5,
+            digits: 15,
+            step: 60 * 15,
             encoding: 'base32'
         });
         const url = 'http://localhost:3000/reset-password-confirmation'
