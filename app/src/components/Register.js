@@ -6,8 +6,8 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
             const response = await authService.register(username, email, password);
             console.log("Response from register:", response);
@@ -29,19 +29,19 @@ const Register = () => {
                     type="text" 
                     placeholder="Username" 
                     value={username} 
-                    onChange={(e) => setUsername(e.target.value)} 
+                    onChange={(event) => setUsername(event.target.value)} 
                 />
                 <input 
                     type="email" 
                     placeholder="Email" 
                     value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
+                    onChange={(event) => setEmail(event.target.value)} 
                 />
                 <input 
                     type="password" 
                     placeholder="Password" 
                     value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
+                    onChange={(event) => setPassword(event.target.value)} 
                 />
                 <button type="submit">Register</button>
             </form>
