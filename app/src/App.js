@@ -4,8 +4,11 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
+import Home from './Home';
 
 function App() {
+    const user = localStorage.getItem('username');
+
     return (
         <Router>
             <Navbar bg="light" expand="lg">
@@ -23,7 +26,12 @@ function App() {
             </Navbar>
             <Container className="mt-3">
                 <Routes>
-                    <Route path="/" element={<h1>Home</h1>} />
+                    <Route path="/" element={
+                        <div>
+                            <h1>Home</h1>
+                            <Home />
+                        </div>
+                    } />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="*" element={<h1>404 not found</h1>} />

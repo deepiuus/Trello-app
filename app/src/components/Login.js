@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import authService from './auth/auth';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const token = await authService.login(email, password);
-            console.log('Login successful, token:', token);
+            const { username } = await authService.login(email, password);
+            console.log('Logged in as:', username);
+            navigate('/');
         } catch (error) {
             console.error('Login error:', error.response ? error.response.data : error.message);
+            setErrorMessage(error.response ? error.response.data.message : error.message);
         }
     };
 

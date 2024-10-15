@@ -11,20 +11,25 @@ import { ResetPasswordDemandDto } from 'src/dto/resetPasswordDemandDto';
 import { ResetPasswordConfirmationDto } from 'src/dto/resetPasswordConfirmationDto';
 import { DeleteAccountDto } from 'src/dto/deleteAccountDto';
 
+
 @Injectable()
 export class AuthService {
-    constructor(private readonly prismaService: PrismaService,
-        private readonly mailerService: MailerService,
+    constructor(
+        private readonly prismaService: PrismaService,
         private readonly jwtService: JwtService,
-        private readonly configService: ConfigService) {}
+        private readonly configService: ConfigService,
+        private readonly mailerService: MailerService,
+    ) {}
+
     async signup(signupDto: SignupDto) {
         const { username, email, password } = signupDto;
-        const user = await this.prismaService.user.findUnique({where : {email}});
+        const user = await this.prismaService.user.findUnique({ where: { email } });
         if (user) throw new ConflictException('User already exists');
         const hash = await bcrypt.hash(password, 10);
-        await this.prismaService.user.create({data: {username, email, password: hash}});
+        const newUser = await this.prismaService.user.create({ data: { username, email, password: hash } });
+        console.log('User created:', newUser);
         await this.mailerService.sendSignupConfirmation(email);
-        return {message: 'User created successfully'};
+        return { message: 'User created successfully' };
     }
     async signin(signinDto: SigninDto) {
         const { email, password } = signinDto;
@@ -37,7 +42,8 @@ export class AuthService {
             email: user.email,
         };
         const token = this.jwtService.sign(payload, { expiresIn: '2h', secret: this.configService.get('SECRET_KEY') });
-        return { access_token: token };
+        console.log('Signin response:', { access_token: token, username: user.username });
+        return { access_token: token, username: user.username };
     }
     async resetPasswordDemand(resetPasswordDemandDto: ResetPasswordDemandDto) {
         const { email } = resetPasswordDemandDto;

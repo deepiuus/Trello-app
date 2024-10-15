@@ -7,13 +7,16 @@ const register = async (username, email, password) => {
 
 const login = async (email, password) => {
     const response = await api.post('/auth/signin', { email, password });
-    const { access_token } = response.data;
+    console.log('Login response:', response.data);
+    const { access_token, username } = response.data;
     localStorage.setItem('token', access_token);
-    return access_token;
+    localStorage.setItem('username', username);
+    return { access_token, username };
 };
 
 const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
 };
 
 const authService = {
