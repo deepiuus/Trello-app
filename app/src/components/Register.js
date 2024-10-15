@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import authService from './auth/auth';
 
 const Register = () => {
@@ -22,30 +24,49 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    placeholder="Username" 
-                    value={username} 
-                    onChange={(event) => setUsername(event.target.value)} 
+        <Form style={{ maxWidth: '400px', margin: 'auto' }} onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter username"
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
+                    required
                 />
-                <input 
-                    type="email" 
-                    placeholder="Email" 
-                    value={email} 
-                    onChange={(event) => setEmail(event.target.value)} 
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    required
                 />
-                <input 
-                    type="password" 
-                    placeholder="Password" 
-                    value={password} 
-                    onChange={(event) => setPassword(event.target.value)} 
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    required
                 />
-                <button type="submit">Register</button>
-            </form>
-        </div>
+            </Form.Group>
+
+            <div className="d-flex justify-content-center">
+                <Button variant="primary" type="submit" className="mt-3 mb-3">
+                    Register
+                </Button>
+            </div>
+
+            <div className="text-center mt-3">
+                <span>Already have an account? </span>
+                <Link to="/login">Login</Link>
+            </div>
+        </Form>
     );
 };
 
