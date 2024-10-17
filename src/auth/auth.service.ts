@@ -77,11 +77,21 @@ export class AuthService {
     }
     async deleteAccount(userId: number, deleteAccountDto: DeleteAccountDto) {
         const { password } = deleteAccountDto;
-        const user = await this.prismaService.user.findUnique({where: { id : userId }});
+        const user = await this.prismaService.user.findUnique({ where: { id: userId } });
         if (!user) throw new NotFoundException('User not found');
         const match = await bcrypt.compare(password, user.password);
         if (!match) throw new UnauthorizedException('Password does not match');
-        await this.prismaService.user.delete({where: { id : userId }});
-        return {data: 'User deleted successfully'};
+        await this.prismaService.workspaceUsers.deleteMany({
+            where: { userId },
+        });
+        await this.prismaService.workspace.deleteMany({
+            where: {
+                users: {
+                    none: {},
+                },
+            },
+        });
+        await this.prismaService.user.delete({ where: { id: userId } });
+        return { data: 'User and associated workspaces deleted successfully' };
     }
 }

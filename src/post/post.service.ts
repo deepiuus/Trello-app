@@ -2,7 +2,6 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { CreatePostDto } from 'src/dto/createPostDto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-
 @Injectable()
 export class PostService {
     constructor(private readonly prismaService: PrismaService) {}
