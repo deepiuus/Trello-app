@@ -1,8 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class UpdateBoardDto {
+export class UpdateCardDto {
     @IsNotEmpty()
-    readonly name?: string;
+    readonly title?: string;
     readonly description?: string;
-    readonly workspaceId?: number;
 }

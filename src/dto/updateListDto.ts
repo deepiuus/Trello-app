@@ -1,7 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class UpdateWorkspaceDto {
+export class UpdateListDto {
     @IsNotEmpty()
     readonly name?: string;
-    readonly description?: string;
 }

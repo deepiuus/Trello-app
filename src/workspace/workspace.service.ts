@@ -20,23 +20,23 @@ export class WorkspaceService {
                             },
                         },
                     },
-                    // boards: {
-                    //     select: {
-                    //         name: true,
-                    //         description: true,
-                    //         lists: {
-                    //             select: {
-                    //                 name: true,
-                    //                 cards: {
-                    //                     select: {
-                    //                         name: true,
-                    //                         description: true,
-                    //                     },
-                    //                 },
-                    //             },
-                    //         },
-                    //     },
-                    // },
+                    boards: {
+                        select: {
+                            name: true,
+                            description: true,
+                            lists: {
+                                select: {
+                                    name: true,
+                                    cards: {
+                                        select: {
+                                            title: true,
+                                            description: true,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
             },
         );

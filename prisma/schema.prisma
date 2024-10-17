@@ -91,7 +91,7 @@ model List {
 model Card {
   cardId      Int              @id @default(autoincrement())
   title       String           @db.VarChar(255)
-  description String
+  description String?
   userId      Int
   listId      Int
   user        User             @relation("user_cards", fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)

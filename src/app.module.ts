@@ -7,8 +7,10 @@ import { PostModule } from './post/post.module';
 import { CommentModule } from './comment/comment.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { BoardsModule } from './board/board.module';
+import { ListModule } from './list/list.module';
+import { CardModule } from './card/card.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({isGlobal : true}), AuthModule, PrismaModule, MailerModule, PostModule, CommentModule, WorkspaceModule, BoardsModule],
+  imports: [ConfigModule.forRoot({isGlobal : true}), AuthModule, PrismaModule, MailerModule, PostModule, CommentModule, WorkspaceModule, BoardsModule, ListModule, CardModule],
 })
 export class AppModule {}
