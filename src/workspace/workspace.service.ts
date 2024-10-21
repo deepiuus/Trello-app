@@ -6,40 +6,24 @@ import { AddUserDto } from 'src/dto/addUserDto';
 
 @Injectable()
 export class WorkspaceService {
-    async getAll() {
-        return await this.prismaService.workspace.findMany(
-            {
-                include: {
-                    users: {
-                        include: {
-                            user: {
-                                select: {
-                                    username: true,
-                                    email: true,
-                                },
-                            },
-                        },
-                    },
-                    boards: {
-                        select: {
-                            name: true,
-                            description: true,
-                            lists: {
-                                select: {
-                                    name: true,
-                                    cards: {
-                                        select: {
-                                            title: true,
-                                            description: true,
-                                        },
-                                    },
-                                },
-                            },
-                        },
+    async getWorkspaces(userId: number) {
+        const workspaces = await this.prismaService.workspaceUsers.findMany({
+            where: { userId },
+            include: {
+                workspace: {
+                    select: {
+                        workspaceId: true,
+                        name: true,
+                        description: true,
                     },
                 },
             },
-        );
+        });
+       return workspaces.map(ws => ({
+            workspaceId: ws.workspace.workspaceId,
+            name: ws.workspace.name,
+            description: ws.workspace.description,
+        }));
     }
     constructor(private readonly prismaService: PrismaService) {}
     async create(createWorkspaceDto: CreateWorkspaceDto, userId: number) {

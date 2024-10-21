@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import authService from './auth/auth';
 
@@ -12,7 +13,7 @@ const Logout = () => {
 
     return (
         <div>
-            <button onClick={handleLogout}>Logout</button>
+            <Button variant="danger" onClick={handleLogout}>Logout</Button>
         </div>
     );
 }

@@ -5,7 +5,7 @@ import { CreateCardDto } from 'src/dto/createCardDto';
 import { UpdateCardDto } from 'src/dto/updateCardDto';
 import { Request } from 'express';
 
-@Controller('cards')
+@Controller('c')
 export class CardController {
     constructor(private readonly cardService: CardService) {}
     @UseGuards(AuthGuard('jwt'))

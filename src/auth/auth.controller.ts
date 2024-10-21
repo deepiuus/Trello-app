@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from 'src/dto/signupDto';
 import { SigninDto } from 'src/dto/signinDto';
@@ -8,8 +8,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { DeleteAccountDto } from 'src/dto/deleteAccountDto';
 
-@Controller('auth')
+@Controller('u')
 export class AuthController {
+    @Get()
+    getAll() {
+        return this.authService.getAll();
+    }
     constructor(private readonly authService: AuthService) {}
     @Post('signup')
     async signup(@Body() signupDto: SignupDto) {

@@ -6,11 +6,13 @@ import { CreateWorkspaceDto } from 'src/dto/createWorkspaceDto';
 import { UpdateWorkspaceDto } from 'src/dto/updateWorkspaceDto';
 import { AddUserDto } from 'src/dto/addUserDto';
 
-@Controller('workspaces')
+@Controller('w')
 export class WorkspaceController {
-    @Get()
-    getAll() {
-        return this.workspaceService.getAll();
+    @UseGuards(AuthGuard('jwt'))
+    @Get('workspaces')
+    getWorkspaces(@Req() request : Request) {
+        const userId = request.user['userId'];
+        return this.workspaceService.getWorkspaces(userId);
     }
     constructor(private readonly workspaceService: WorkspaceService) {}
     @UseGuards(AuthGuard('jwt'))

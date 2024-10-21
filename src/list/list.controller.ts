@@ -5,7 +5,7 @@ import { CreateListDto } from 'src/dto/createListDto';
 import { UpdateListDto } from 'src/dto/updateListDto';
 import { Request } from 'express';
 
-@Controller('lists')
+@Controller('l')
 export class ListController {
     constructor(private readonly listService: ListService) {}
     @UseGuards(AuthGuard('jwt'))

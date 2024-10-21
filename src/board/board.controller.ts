@@ -6,8 +6,14 @@ import { CreateBoardDto } from 'src/dto/createBoardDto';
 import { UpdateBoardDto } from 'src/dto/updateBoardDto';
 import { AddUserDto } from 'src/dto/addUserDto';
 
-@Controller('boards')
+@Controller('b')
 export class BoardController {
+    @UseGuards(AuthGuard('jwt'))
+    @Get('boards')
+    getBoards(@Req() request : Request) {
+        const userId = request.user['userId'];
+        return this.boardService.getBoards(userId);
+    }
     constructor(private readonly boardService: BoardService) {}
     @UseGuards(AuthGuard('jwt'))
     @Post('create')

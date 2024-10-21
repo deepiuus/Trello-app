@@ -6,6 +6,25 @@ import { AddUserDto } from 'src/dto/addUserDto';
 
 @Injectable()
 export class BoardService {
+    async getBoards(userId: number) {
+        const boards = await this.prismaService.boardUsers.findMany({
+            where: { userId },
+            include: {
+                board: {
+                    select: {
+                        boardId: true,
+                        name: true,
+                        description: true,
+                    },
+                },
+            },
+        });
+        return boards.map(b => ({
+            boardId: b.board.boardId,
+            name: b.board.name,
+            description: b.board.description,
+        }));
+    }
     constructor(private readonly prismaService: PrismaService) {}
     async create(createBoardDto: CreateBoardDto, userId: number) {
         const { name, description, workspaceId } = createBoardDto;

@@ -14,6 +14,39 @@ import { DeleteAccountDto } from 'src/dto/deleteAccountDto';
 
 @Injectable()
 export class AuthService {
+    async getAll() {
+        return await this.prismaService.workspace.findMany( {
+            include: {
+                users: {
+                    include: {
+                        user: {
+                            select: {
+                                username: true,
+                                email: true,
+                            },
+                        },
+                    },
+                },
+                boards: {
+                    select: {
+                        name: true,
+                        description: true,
+                        lists: {
+                            select: {
+                                name: true,
+                                cards: {
+                                    select: {
+                                        title: true,
+                                        description: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
     constructor(
         private readonly prismaService: PrismaService,
         private readonly jwtService: JwtService,
